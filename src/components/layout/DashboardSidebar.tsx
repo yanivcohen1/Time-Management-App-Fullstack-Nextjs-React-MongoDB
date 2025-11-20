@@ -10,7 +10,6 @@ import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
 import ShieldRoundedIcon from "@mui/icons-material/ShieldRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { useLogout, useSession } from "@/hooks/useAuth";
@@ -195,12 +194,14 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
                           px: 2,
                           py: 1,
                           color: selected ? "primary.contrastText" : "text.secondary",
-                          bgcolor: selected ? "primary.main" : "action.hover"
+                          bgcolor: selected ? "primary.main" : "transparent",
+                          "&:hover": {
+                            bgcolor: selected ? "primary.main" : "action.hover"
+                          }
                         }}
                       >
                         <ListItemIcon sx={{ minWidth: 32, color: "inherit" }}>{child.icon}</ListItemIcon>
                         <ListItemText primary={child.label} primaryTypographyProps={{ fontWeight: 500 }} />
-                        <KeyboardArrowRightRoundedIcon fontSize="small" />
                       </ListItemButton>
                     );
                   })}
