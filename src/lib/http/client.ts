@@ -58,6 +58,13 @@ api.interceptors.response.use(
         message: typeof serverMessage === "string" ? serverMessage : fallbackMessage,
         severity: "error"
       });
+    } else {
+      const serverMessage = response?.data?.message;
+      const fallbackMessage = "An error occurred while processing your request.";
+      showSnackbar({
+        message: typeof serverMessage === "string" ? serverMessage : fallbackMessage,
+        severity: "error"
+      });
     }
     return Promise.reject(error);
   }
