@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { Avatar, Box, Button, Collapse, Divider, List, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ChecklistRoundedIcon from "@mui/icons-material/ChecklistRounded";
@@ -81,6 +81,22 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
     setExpandedGroups((prev) => ({ ...prev, [label]: !prev[label] }));
   };
 
+  const closeGroup = (label: string) => {
+    setExpandedGroups((prev) => {
+      if (!prev[label]) {
+        return prev;
+      }
+      return { ...prev, [label]: false };
+    });
+  };
+
+  const handleSimpleItemClick = (label: string) => {
+    if (label !== "Admin") {
+      closeGroup("Admin");
+    }
+    handleNavigate();
+  };
+
   const isAnchorActive = (href?: string) => {
     if (!href) {
       return false;
@@ -106,6 +122,18 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
   };
 
   const isAuthenticated = Boolean(session?.user);
+
+  useEffect(() => {
+    const isAdminPath = pathname === "/admin" || pathname.startsWith("/admin/");
+    if (!isAdminPath) {
+      setExpandedGroups((prev) => {
+        if (!prev.Admin) {
+          return prev;
+        }
+        return { ...prev, Admin: false };
+      });
+    }
+  }, [pathname]);
 
   return (
     <Stack spacing={3} sx={{ minHeight: "100%" }}>
@@ -138,7 +166,7 @@ export function DashboardSidebar({ onNavigate }: DashboardSidebarProps) {
               <ListItemButton
                 key={item.label}
                 {...buttonProps}
-                onClick={handleNavigate}
+                onClick={() => handleSimpleItemClick(item.label)}
                 selected={selected}
                 sx={{
                   borderRadius: 2,
