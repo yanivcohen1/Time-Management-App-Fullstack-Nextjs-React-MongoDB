@@ -2,6 +2,7 @@
 
 import axios, { type AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from "axios";
 import { showSnackbar } from "@/lib/ui/snackbar";
+import { loadingBarController } from "@/lib/ui/loading-bar";
 import { tokenStorage } from "./token-storage";
 
 const envBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
@@ -63,18 +64,29 @@ const refreshTokens = async () => {
   return accessToken;
 };
 
-api.interceptors.request.use((config) => {
-  const token = tokenStorage.getAccessToken();
-  if (token) {
-    config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.request.use(
+  (config) => {
+    loadingBarController.startRequest();
+    const token = tokenStorage.getAccessToken();
+    if (token) {
+      config.headers = config.headers ?? {};
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (requestError: AxiosError) => {
+    loadingBarController.finishRequest();
+    return Promise.reject(requestError);
   }
-  return config;
-});
+);
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    loadingBarController.finishRequest();
+    return response;
+  },
   async (error: AxiosError<ErrorPayload>) => {
+    loadingBarController.finishRequest();
     const { response, config } = error;
     const requestConfig = config as RetriableRequestConfig | undefined;
     const notifier = createErrorNotifier();
