@@ -2,7 +2,7 @@
 
 import { FormControlLabel, Paper, Stack, Switch, Typography } from "@mui/material";
 import { useParams, useSearchParams } from "next/navigation";
-import { AdminPageLayout, useAdminSwitch } from "../../../page";
+import { useAdminSwitch } from "../../../AdminLayout";
 
 const getQueryValue = (searchParams: ReturnType<typeof useSearchParams>, key: string) => {
   const value = searchParams.getAll(key);
@@ -75,9 +75,5 @@ export default function AdminUserPage() {
   const queryId = getQueryValue(searchParams, "id");
   const queryName = getQueryValue(searchParams, "name");
 
-  return (
-    <AdminPageLayout>
-      <AdminUserContent adminId={adminId} userId={userId} queryId={queryId} queryName={queryName} />
-    </AdminPageLayout>
-  );
+  return <AdminUserContent adminId={adminId} userId={userId} queryId={queryId} queryName={queryName} />;
 }

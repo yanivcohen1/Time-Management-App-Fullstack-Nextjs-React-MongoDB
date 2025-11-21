@@ -1,157 +1,27 @@
 "use client";
 
-import { ReactNode, createContext, useContext, useMemo, useState } from "react";
-import { Box, Button, CircularProgress, FormControlLabel, Paper, Stack, Switch, Typography } from "@mui/material";
-import { usePathname, useRouter } from "next/navigation";
-import { BreadCrumb } from "primereact/breadcrumb";
-import { MenuItem } from "primereact/menuitem";
-import { useSession } from "@/hooks/useAuth";
-import { tokenStorage } from "@/lib/http/token-storage";
-
-type AdminPageLayoutProps = {
-  children?: ReactNode;
-};
-
-type AdminSwitchContextValue = {
-  interWorkspaceEnabled: boolean;
-  setInterWorkspaceEnabled: (enabled: boolean) => void;
-};
-
-const AdminSwitchContext = createContext<AdminSwitchContextValue | undefined>(undefined);
-
-export function useAdminSwitch() {
-  const context = useContext(AdminSwitchContext);
-  if (!context) {
-    throw new Error("useAdminSwitch must be used within AdminPageLayout");
-  }
-  return context;
-}
-
-export function AdminPageLayout({ children }: AdminPageLayoutProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const { data: session, isLoading: sessionLoading, isError: sessionError } = useSession();
-  const hasToken = !!tokenStorage.getAccessToken();
-  const [interWorkspaceEnabled, setInterWorkspaceEnabled] = useState(false);
-  const [activeView, setActiveView] = useState<"admin" | "user">(() => (pathname?.includes("/user/") ? "user" : "admin"));
-  const resolvedActiveView = pathname?.startsWith("/admin") ? (pathname.includes("/user/") ? "user" : "admin") : activeView;
-
-  const breadcrumbItems: MenuItem[] = useMemo(
-    () => [
-      {
-        label: "Admin",
-        icon: "pi pi-shield",
-        command: () => {
-          setActiveView("admin");
-          router.push("/admin/1");
-        },
-      },
-      {
-        label: "User",
-        icon: "pi pi-user",
-        command: () => {
-          setActiveView("user");
-          router.push("/admin/3/user/2?id=1&name=yar");
-        },
-      },
-    ],
-    [router, setActiveView]
-  );
-
-  const home: MenuItem = useMemo(
-    () => ({
-      icon: <span className="pi pi-home" aria-label="Home" />,
-      url: "/",
-    }),
-    []
-  );
-
-  if ((!hasToken || sessionError) && !sessionLoading) {
-    return (
-      <Stack alignItems="center" justifyContent="center" minHeight="70vh" spacing={2}>
-        <Typography variant="h5">Please sign in to access the admin console.</Typography>
-        <Button href="/login" variant="contained">
-          Go to login
-        </Button>
-      </Stack>
-    );
-  }
-
-  if (sessionLoading || !session) {
-    return (
-      <Stack alignItems="center" justifyContent="center" minHeight="70vh">
-        <CircularProgress />
-      </Stack>
-    );
-  }
-
-  if (session.user.role !== "admin") {
-    return (
-      <Stack alignItems="center" justifyContent="center" minHeight="70vh" spacing={2}>
-        <Typography variant="h5">You do not have access to the admin console.</Typography>
-        <Button href="/todo" variant="contained">
-          Go to todos
-        </Button>
-      </Stack>
-    );
-  }
-
-  return (
-    <AdminSwitchContext.Provider value={{ interWorkspaceEnabled, setInterWorkspaceEnabled }}>
-      <main>
-        <Box sx={{ px: { xs: 2, md: 6 }, py: 6 }}>
-          <Stack spacing={3}>
-            <Paper sx={{ p: 2, borderRadius: 3 }}>
-              <BreadCrumb home={home} model={breadcrumbItems} />
-            </Paper>
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              alignItems={{ xs: "flex-start", md: "center" }}
-              justifyContent="space-between"
-              spacing={2}
-            >
-              <Stack spacing={1}>
-                <Typography variant="h3" fontWeight={700}>
-                  Admin console
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  Manage roles, enforce rate limits, and review access logs across the workspace.
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Currently viewing: {resolvedActiveView === "admin" ? "Admin overview" : "User details"}
-                </Typography>
-              </Stack>
-
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="primary"
-                    checked={interWorkspaceEnabled}
-                    onChange={(_, checked) => setInterWorkspaceEnabled(checked)}
-                  />
-                }
-                label={interWorkspaceEnabled ? "User workspace enabled" : "User workspace disabled"}
-              />
-            </Stack>
-
-            <Paper sx={{ p: 3, borderRadius: 3 }}>
-              <Stack spacing={1.5}>
-                <Typography variant="h6">Security overview</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  This placeholder area is where you would surface guardrail metrics, API quotas, and access history. Hook
-                  it up to MikroORM queries or telemetry as you grow the project.
-                </Typography>
-              </Stack>
-            </Paper>
-
-            {children}
-          </Stack>
-        </Box>
-      </main>
-    </AdminSwitchContext.Provider>
-  );
-}
+import { Button, Paper, Stack, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function AdminPage() {
-  return <AdminPageLayout />;
+  return (
+    <Paper sx={{ p: 3, borderRadius: 3 }}>
+      <Stack spacing={1.5}>
+        <Typography variant="h4" fontWeight={700}>
+          Welcome to the admin console
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Use the breadcrumb above to jump straight to the canonical admin record or drill into the linked user profile.
+        </Typography>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+          <Button component={Link} href="/admin/1" variant="contained">
+            View admin #1
+          </Button>
+          <Button component={Link} href="/admin/3/user/2?id=1&name=yar" variant="outlined">
+            Jump to user view
+          </Button>
+        </Stack>
+      </Stack>
+    </Paper>
+  );
 }
