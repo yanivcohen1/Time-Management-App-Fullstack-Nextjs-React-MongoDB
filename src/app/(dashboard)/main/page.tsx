@@ -19,7 +19,6 @@ export default function MainPage() {
   const [isProfileCheckPending, setIsProfileCheckPending] = useState(false);
 
   const hasToken = !!tokenStorage.getAccessToken();
-  const isAdmin = session?.user.role === "admin";
 
   const handleShowUserDetails = async () => {
     try {
@@ -30,17 +29,17 @@ export default function MainPage() {
       const roleLabel = data.info.role === "admin" ? "Admin" : "User";
       showSnackbar({ message: `${data.info.name} • ${roleLabel}`, severity: "info" });
     } catch (error) {
-      let msg = 'server unknown error';
+      let message = "Unknown server error";
       if (isAxiosError(error)) {
-        msg = JSON.stringify(error.response?.data ?? error.message, null, 2);
-        msg = msg === error.message ? '' : error.message + ", with msg: " + msg;
+        const details = JSON.stringify(error.response?.data ?? error.message, null, 2);
+        message = details === error.message ? error.message : `${error.message} • ${details}`;
       } else if (error instanceof Error) {
-        msg = error.message;
+        message = error.message;
       } else {
-        msg = String(error);
+        message = String(error);
       }
       console.error("Failed to fetch user details", error);
-      // showSnackbar({ message: msg, severity: "error" });
+      showSnackbar({ message, severity: "error" });
     } finally {
       setIsProfileCheckPending(false);
     }
