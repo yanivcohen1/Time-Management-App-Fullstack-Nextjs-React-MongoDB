@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, Stack, Typography } from "@mui/material";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { useRegister } from "@/hooks/useAuth";
+import { type RegisterInput } from "@/lib/validation/auth";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function RegisterPage() {
               isLoading={isPending}
               error={error?.message ?? null}
               onSubmit={async (values) => {
-                await mutateAsync(values);
+                await mutateAsync(values as RegisterInput);
                 router.replace("/main");
               }}
             />

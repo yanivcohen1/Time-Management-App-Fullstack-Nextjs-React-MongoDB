@@ -25,9 +25,10 @@ const buildFilter = (params: URLSearchParams, viewer: User): FilterQuery<Todo> =
   }
 
   if (parsed.search) {
+    const regex = new RegExp(parsed.search, "i");
     filter.$or = [
-      { title: { $regex: parsed.search, $options: "i" } },
-      { description: { $regex: parsed.search, $options: "i" } }
+      { title: regex },
+      { description: regex }
     ];
   }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, createContext, useContext, useMemo, useRef, useState } from "react";
+import { ReactNode, createContext, useContext, useMemo, useState, createRef } from "react";
 import { Box, Button, CircularProgress, FormControlLabel, Paper, Stack, Switch, Typography } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 import { BreadCrumb } from "primereact/breadcrumb";
@@ -49,7 +49,11 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       return { ...prev, [transitionKey]: enabled };
     });
   };
-  const transitionRef = useRef<HTMLDivElement>(null);
+  
+  const nodeRef = useMemo(() => {
+    return createRef<HTMLDivElement>();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transitionKey]);
 
   const breadcrumbItems: MenuItem[] = useMemo(
     () => [
@@ -160,8 +164,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             </Paper>
 
             <SwitchTransition mode="out-in">
-              <CSSTransition key={transitionKey} nodeRef={transitionRef} classNames="slide" timeout={{ enter: 500, exit: 500 }} unmountOnExit appear>
-                <div ref={transitionRef}>{children}</div>
+              <CSSTransition key={transitionKey} nodeRef={nodeRef} classNames="slide" timeout={{ enter: 500, exit: 500 }} unmountOnExit appear>
+                <div ref={nodeRef}>{children}</div>
               </CSSTransition>
             </SwitchTransition>
           </Stack>

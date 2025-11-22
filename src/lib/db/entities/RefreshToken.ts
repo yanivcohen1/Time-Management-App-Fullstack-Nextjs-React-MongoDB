@@ -1,25 +1,29 @@
-import { Entity, ManyToOne, PrimaryKey, Property, SerializedPrimaryKey, Unique } from "@mikro-orm/core";
+import { Entity, ManyToOne, PrimaryKey, Property, SerializedPrimaryKey, Unique, OptionalProps } from "@mikro-orm/core";
 import { ObjectId } from "@mikro-orm/mongodb";
 import { User } from "./User";
 
 @Entity({ collection: "refresh_tokens" })
 export class RefreshToken {
-  @PrimaryKey()
+  [OptionalProps]?: 'createdAt';
+
+  @PrimaryKey({ type: 'ObjectId' })
   _id: ObjectId = new ObjectId();
 
   @SerializedPrimaryKey()
-  id!: string;
+  get id(): string {
+    return this._id.toHexString();
+  }
 
-  @Property()
+  @Property({ type: 'string' })
   @Unique()
   token!: string;
 
   @ManyToOne(() => User)
   user!: User;
 
-  @Property()
+  @Property({ type: 'date' })
   expiresAt!: Date;
 
-  @Property({ onCreate: () => new Date() })
+  @Property({ type: 'date', onCreate: () => new Date() })
   createdAt: Date = new Date();
 }

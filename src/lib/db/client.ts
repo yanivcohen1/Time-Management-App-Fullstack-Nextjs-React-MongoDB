@@ -1,5 +1,6 @@
 import "reflect-metadata";
-import { MikroORM, MongoEntityManager, MongoDriver } from "@mikro-orm/mongodb";
+import { MikroORM } from "@mikro-orm/core";
+import { MongoEntityManager, MongoDriver } from "@mikro-orm/mongodb";
 import config from "../../../mikro-orm.config";
 
 const globalForOrm = globalThis as typeof globalThis & {

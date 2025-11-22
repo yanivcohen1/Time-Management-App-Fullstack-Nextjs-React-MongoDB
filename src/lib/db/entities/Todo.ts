@@ -1,26 +1,30 @@
-import { Entity, Enum, ManyToOne, PrimaryKey, Property, SerializedPrimaryKey } from "@mikro-orm/core";
+import { Entity, Enum, ManyToOne, PrimaryKey, Property, SerializedPrimaryKey, OptionalProps } from "@mikro-orm/core";
 import { ObjectId } from "@mikro-orm/mongodb";
 import { TODO_STATUSES, type TodoStatus } from "../../../types/todo";
 import { User } from "./User";
 
 @Entity({ collection: "todos" })
 export class Todo {
-  @PrimaryKey()
+  [OptionalProps]?: 'createdAt' | 'updatedAt' | 'status' | 'tags';
+
+  @PrimaryKey({ type: 'ObjectId' })
   _id: ObjectId = new ObjectId();
 
   @SerializedPrimaryKey()
-  id!: string;
+  get id(): string {
+    return this._id.toHexString();
+  }
 
-  @Property()
+  @Property({ type: 'string' })
   title!: string;
 
-  @Property({ nullable: true })
+  @Property({ type: 'string', nullable: true })
   description?: string;
 
   @Enum({ items: () => TODO_STATUSES, default: "PENDING" })
   status: TodoStatus = "PENDING";
 
-  @Property({ nullable: true })
+  @Property({ type: 'date', nullable: true })
   dueDate?: Date;
 
   @Property({ type: "array", default: [] })
@@ -29,9 +33,9 @@ export class Todo {
   @ManyToOne(() => User)
   owner!: User;
 
-  @Property({ onCreate: () => new Date() })
+  @Property({ type: 'date', onCreate: () => new Date() })
   createdAt: Date = new Date();
 
-  @Property({ onUpdate: () => new Date(), onCreate: () => new Date() })
+  @Property({ type: 'date', onUpdate: () => new Date(), onCreate: () => new Date() })
   updatedAt: Date = new Date();
 }

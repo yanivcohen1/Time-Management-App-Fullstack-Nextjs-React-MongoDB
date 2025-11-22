@@ -51,7 +51,7 @@ export function RootProviders({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AppRouterCacheProvider options={{ enableCssLayering: true }}>
+    <AppRouterCacheProvider options={{ enableCssLayer: true }}>
       <ThemeModeContext.Provider value={{ mode, toggleMode }}>
         <ThemeProvider theme={theme}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -60,7 +60,7 @@ export function RootProviders({ children }: { children: ReactNode }) {
               <SnackbarProvider>
                 <LoadingBar ref={loadingBarRef} color={theme.palette.primary.main} height={3} shadow={true} transitionTime={200} />
                 {children}
-                <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+                <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
               </SnackbarProvider>
             </QueryClientProvider>
           </LocalizationProvider>

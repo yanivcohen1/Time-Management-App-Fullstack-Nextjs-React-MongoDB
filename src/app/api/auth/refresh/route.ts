@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     }
 
     const em = await getEntityManager();
-    const tokenRecord = await em.findOne(RefreshToken, { id: tokenPayload.tokenId }, { populate: ["user"] });
+    const tokenRecord = await em.findOne(RefreshToken, tokenPayload.tokenId, { populate: ["user"] });
     if (!tokenRecord || !tokenRecord.user) {
       throw new ApiError(401, "Refresh token revoked");
     }

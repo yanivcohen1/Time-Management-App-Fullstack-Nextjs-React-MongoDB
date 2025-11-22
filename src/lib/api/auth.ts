@@ -26,7 +26,7 @@ export const requireUser = async (request: NextRequest): Promise<AuthenticatedCo
   try {
     const payload = verifyAccessToken(token);
     const em = await getEntityManager();
-    const user = await em.findOne(User, { id: payload.sub });
+    const user = await em.findOne(User, payload.sub);
     if (!user) {
       throw new ApiError(401, "Invalid token subject");
     }
@@ -58,4 +58,4 @@ export const requireUserWithRoles = async (
 };
 
 export const getClientIp = (request: NextRequest) =>
-  request.ip ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  (request as any).ip ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
