@@ -1,6 +1,6 @@
 ## Time-Management-App
 
-Full-stack Next.js 16 application built with Material UI, MikroORM, and MongoDB 3.4. The app implements email/password authentication, short-lived JWT access tokens with refresh rotation, rate limiting, and filterable todo lists backed by React Query.
+Full-stack Next.js 16 application built with Material UI, MikroORM, and MongoDB 3.4 and Cypress(E2E) and Vite. The app implements email/password authentication, short-lived JWT access tokens with refresh rotation, rate limiting, and filterable todo lists backed by React Query.
 
 ### Stack
 
@@ -11,8 +11,9 @@ Full-stack Next.js 16 application built with Material UI, MikroORM, and MongoDB 
 - TanStack Query (React Query)
 - Axios with automatic access-token refresh
 - React Hook Form + Zod validation
-- Vitest + Playwright for testing
 - Lucide React (Icons)
+- Vitest unit tests 
+- Cypress for E2E tests
 
 ### Features
 
@@ -23,7 +24,7 @@ Full-stack Next.js 16 application built with Material UI, MikroORM, and MongoDB 
 - Quick profile inspector on the Todo page that pings the API and surfaces the current name + role via snackbar.
 - Built-in rate limiting, password hashing, and JWT session utilities for secure APIs.
 - Responsive Material UI theme with dark/light toggle and reusable layout components.
-- End-to-end test coverage via Vitest + Playwright and seeded demo data for local workflows.
+- End-to-end test coverage via Vitest + Cypress and seeded demo data for local workflows.
 
 ### Prerequisites
 
@@ -54,10 +55,10 @@ pnpm test              # Vitest unit tests
 pnpm test:watch        # Vitest in watch mode
 pnpm coverage          # Vitest coverage report
 pnpm db:seed           # seed demo user/todos via MikroORM
-pnpm test:e2e          # Playwright end-to-end tests (runs `npx playwright test`)
+pnpm test:e2e          # Cypress end-to-end tests (runs `cypress run --e2e --browser chrome`)
 ```
 
-Run `npx playwright install` once per environment to ensure the browser binaries required by `pnpm test:e2e` are available.
+Run `npx cypress install` once per environment to ensure the browser binaries required by `pnpm test:e2e` are available.
 
 ### Seeding
 
@@ -94,11 +95,11 @@ Use the Todo page "Show user info" button to verify which account is active; the
 │   ├── lib/               # Env, API, auth, db, and validation helpers
 │   ├── theme/             # Material UI theme tokens
 │   └── types/             # Shared TypeScript models
-├── tests/                 # E2E Playwright specs
+├── tests/                 # E2E Cypress specs
 ├── eslint.config.mjs      # Next.js lint configuration
 ├── mikro-orm.config.ts    # MikroORM + Mongo connection + seeding config
 ├── next.config.ts         # Next.js runtime config
-├── playwright.config.ts   # Playwright runner configuration
+├── cypress.config.ts   # Cypress runner configuration
 ├── vitest.config.ts       # Vitest test runner configuration
 └── package.json           # Scripts and dependencies
 ```
