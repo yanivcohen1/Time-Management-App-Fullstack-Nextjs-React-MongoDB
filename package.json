@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "coverage": "vitest run --coverage",
     "db:seed": "ts-node --project tsconfig.scripts.json scripts/seed.ts",
-    "test:e2e": "cypress run --e2e --browser chrome" 
+    "test:e2e": "cross-env CYPRESS_REPORTER=cypress-mochawesome-reporter cypress run --e2e --browser chrome",
+    "test:e2e:no-report": "cypress run --e2e --browser chrome" 
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -62,6 +63,8 @@
     "@types/react-transition-group": "^4.4.12",
     "@vitest/coverage-v8": "^2.1.5",
     "cypress": "^15.7.0",
+    "cross-env": "^10.1.0",
+    "cypress-mochawesome-reporter": "^4.0.2",
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
     "jsdom": "^26.0.0",

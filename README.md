@@ -55,7 +55,8 @@ pnpm test              # Vitest unit tests
 pnpm test:watch        # Vitest in watch mode
 pnpm coverage          # Vitest coverage report
 pnpm db:seed           # seed demo user/todos via MikroORM
-pnpm test:e2e          # Cypress end-to-end tests (runs `cypress run --e2e --browser chrome`)
+pnpm test:e2e          # Cypress end-to-end tests with reporter (runs `cross-env CYPRESS_REPORTER=cypress-mochawesome-reporter cypress run --e2e --browser chrome`)
+pnpm test:e2e:no-report # Cypress end-to-end tests without reporter (runs `cypress run --e2e --browser chrome`)
 ```
 
 Run `npx cypress install` once per environment to ensure the browser binaries required by `pnpm test:e2e` are available.
@@ -103,6 +104,31 @@ Use the Todo page "Show user info" button to verify which account is active; the
 ├── vitest.config.ts       # Vitest test runner configuration
 └── package.json           # Scripts and dependencies
 ```
+
+## Testing
+
+The project includes unit tests with Jest and end-to-end (E2E) tests with Cypress.
+
+### Unit Tests
+Run unit tests using:
+```bash
+pnpm test
+```
+
+### End-to-End Tests
+E2E tests are configured to run in Chrome browser. You can run them with or without HTML report generation:
+
+- **With HTML Report**: `pnpm test:e2e` generates an HTML report at `cypress/reports/index.html` (overwrites previous reports).
+- **Without Report**: `pnpm test:e2e:no-report` runs tests without generating any reports.
+
+Reports include test results, screenshots of failures, and detailed logs. The HTML report is useful for CI/CD pipelines and manual review.
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
 <img width="2730" height="1816" alt="image" src="https://github.com/user-attachments/assets/5e6b062b-1dfb-4574-af68-e1aa70b38ab4" />
 
