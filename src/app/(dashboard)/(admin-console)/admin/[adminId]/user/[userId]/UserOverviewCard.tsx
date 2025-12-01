@@ -1,7 +1,7 @@
 "use client";
 
 import { FormControlLabel, Paper, Stack, Switch, Typography } from "@mui/material";
-import { useAdminSwitch } from "../AdminLayout";
+import { useAdminSwitch } from "../../../AdminLayout";
 
 export type UserOverviewCardProps = {
   userId: string;

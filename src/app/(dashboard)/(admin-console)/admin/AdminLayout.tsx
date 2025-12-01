@@ -8,8 +8,8 @@ import { MenuItem } from "primereact/menuitem";
 import { useSession } from "@/hooks/useAuth";
 import { tokenStorage } from "@/lib/http/token-storage";
 import { AdminPageTransition } from "./_components/AdminPageTransition";
-import { AdminOverviewCard } from "./_components/AdminOverviewCard";
-import { UserOverviewCard } from "./_components/UserOverviewCard";
+import { AdminOverviewCard } from "./[adminId]/AdminOverviewCard";
+import { UserOverviewCard } from "./[adminId]/user/[userId]/UserOverviewCard";
 import { AdminProvider } from "./_components/AdminContext";
 
 interface AdminLayoutProps {
