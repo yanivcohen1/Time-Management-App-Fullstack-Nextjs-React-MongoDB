@@ -2,7 +2,7 @@
 
 import { FormControlLabel, Paper, Stack, Switch, Typography } from "@mui/material";
 import { useAdminContext } from "../_components/AdminContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type AdminOverviewCardProps = {
   adminId: string;
@@ -14,6 +14,12 @@ export function AdminOverviewCard({ adminId }: AdminOverviewCardProps) {
   const toggleAdminMode = () => {
     setIsAdminMode((prev) => !prev);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsAdminMode(false), 0);
+    return () => clearTimeout(timer);
+    // You can add side effects here if needed when isAdminMode changes
+  }, [adminId]);
 
   return (
     <Paper sx={{ p: 3, borderRadius: 3 }}>
