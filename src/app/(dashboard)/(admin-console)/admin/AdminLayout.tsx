@@ -172,7 +172,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               <Stack spacing={3}>
                 {adminId ? (
                   <AdminProvider>
-                    <AdminOverviewCard adminId={adminId} />
+                    <AdminOverviewCard adminId={adminId} key={adminId}/>
                     {userId ? (
                       <>
                         <UserOverviewCard userId={userId} queryId={queryId} queryName={queryName} />
