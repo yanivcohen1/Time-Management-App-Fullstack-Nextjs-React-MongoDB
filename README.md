@@ -134,11 +134,11 @@ Reports include test results, screenshots of failures, and detailed logs. The HT
 
 ### Jira Scram page
 
-<img width="2053" height="1262" alt="image" src="https://github.com/user-attachments/assets/1b9efd36-ee32-441c-93a2-b71e7d73c7ad" />
+<img width="2345" height="1261" alt="image" src="https://github.com/user-attachments/assets/7000ec17-fb7e-40df-a3ed-2a83eb90b133" />
 
 ### Ligth mode
 
-<img width="2051" height="1318" alt="image" src="https://github.com/user-attachments/assets/f4f3106f-d100-4eda-b63c-18751466652c" />
+<img width="1888" height="1437" alt="image" src="https://github.com/user-attachments/assets/8a7055c7-8d97-430d-89d2-ed257a664e38" />
 
 ### Mobile mode
 
