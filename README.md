@@ -126,22 +126,21 @@ Reports include test results, screenshots of failures, and detailed logs. The HT
 
 ### Main Page
 
-<img width="1860" height="1436" alt="image" src="https://github.com/user-attachments/assets/85324d45-81f6-486f-8494-d3fbc2819173" />
+<img width="1963" height="1419" alt="image" src="https://github.com/user-attachments/assets/6b13ec2a-3295-46b8-8c5a-0753ccdb039a" />
 
 ### Track Status
 
-<img width="1928" height="1828" alt="image" src="https://github.com/user-attachments/assets/4555a96c-3877-4af7-b744-ac5b9718f193" />
+<img width="2396" height="1868" alt="image" src="https://github.com/user-attachments/assets/2de00dae-9a42-4b6c-835c-bdd4c8f263de" />
 
-### Jira Scram page
+### Agile Scram page
 
-<img width="2345" height="1261" alt="image" src="https://github.com/user-attachments/assets/7000ec17-fb7e-40df-a3ed-2a83eb90b133" />
+<img width="2424" height="1713" alt="image" src="https://github.com/user-attachments/assets/183eec4a-aa74-4714-b541-dc21103900f8" />
 
 ### Ligth mode
 
-<img width="1888" height="1437" alt="image" src="https://github.com/user-attachments/assets/8a7055c7-8d97-430d-89d2-ed257a664e38" />
+<img width="1965" height="1431" alt="image" src="https://github.com/user-attachments/assets/4572e2c2-d42c-448e-bc74-67a0ccdec1c0" />
 
 ### Mobile mode
 
-<img width="1367" height="1459" alt="image" src="https://github.com/user-attachments/assets/c07457d6-f6a9-4b46-9338-9c38f1f8aead" />
-
+<img width="1321" height="1410" alt="image" src="https://github.com/user-attachments/assets/f981f340-8d60-4a78-9cb3-854907b9fa55" />
 
