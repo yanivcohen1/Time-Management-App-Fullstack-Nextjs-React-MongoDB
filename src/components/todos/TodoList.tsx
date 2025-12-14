@@ -62,10 +62,10 @@ export function TodoList({ todos, onEdit, onDelete }: Props) {
               sx={{ pb: 0 }}
               action={
                 <Stack direction="row" spacing={1}>
-                  <IconButton aria-label="edit" onClick={() => onEdit(todo)}>
+                  <IconButton aria-label="edit" onClick={() => onEdit(todo)} color="primary">
                     <EditIcon />
                   </IconButton>
-                  <IconButton aria-label="delete" onClick={() => onDelete(todo)}>
+                  <IconButton aria-label="delete" onClick={() => onDelete(todo)} color="error">
                     <DeleteIcon />
                   </IconButton>
                 </Stack>
