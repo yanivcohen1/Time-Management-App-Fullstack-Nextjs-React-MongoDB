@@ -128,6 +128,17 @@ Use the Todo page "Show user info" button to verify which account is active; the
 │   │   └── http/          # HTTP client + token storage
 │   ├── theme/             # Material UI theme tokens and helpers
 │   └── types/             # Shared TypeScript types/models
+│   ├── api/               # Server-side API routes and utilities (app/api)
+│   │   ├── auth/          # Server auth endpoints and helpers
+│   │   │   ├── register.ts   # `POST /api/auth/register` - create user, hash password
+│   │   │   ├── login.ts      # `POST /api/auth/login` - verify creds, issue access+refresh
+│   │   │   ├── refresh.ts    # `POST /api/auth/refresh` - rotate/issue refresh tokens
+│   │   │   ├── logout.ts     # `POST /api/auth/logout` - revoke refresh token/session
+│   │   │   ├── me.ts         # `GET /api/auth/me` - return current user profile (guarded)
+│   │   │   └── schemas.ts    # Zod schemas / request validators for auth endpoints
+│   │   ├── todos/         # Server handlers for todo CRUD + filters
+│   │   ├── middleware/    # Rate limit, auth guards, helpers
+│   │   └── utils/         # Shared server utilities (serializers, validators)
 ├── docs/                  # Architecture notes and technical overviews
 ├── cypress/               # E2E specs, reports, screenshots
 ```
